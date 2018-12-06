@@ -1,0 +1,28 @@
+{
+  "name": "que_veo_hoy",
+  "version": "1.0.0",
+  "description": "que veo hoy con Node.js",
+  "main": "servidor.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "chai": "^4.2.0",
+    "cors": "^2.8.5",
+    "cross-env": "^5.2.0",
+    "dotenv": "^6.1.0",
+    "exec-sql": "^2.0.2",
+    "express": "^4.16.4",
+    "mocha": "^5.2.0",
+    "morgan": "^1.9.1",
+    "mysql": "^2.16.0",
+    "supertest": "^3.3.0"
+  },
+  "devDependencies": {},
+  "author": "Johanna Jaime",
+  "license": "ISC"
+}

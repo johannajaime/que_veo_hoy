@@ -1,0 +1,26 @@
+{
+  "name": "que-veo-hoy",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johannajaime/que_veo_hoy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/johannajaime/que_veo_hoy/issues"
+  },
+  "homepage": "https://github.com/johannajaime/que_veo_hoy#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "mysql": "^2.16.0",
+    "save": "^2.3.3"
+  },
+  "devDependencies": {},
+  "description": ""
+}

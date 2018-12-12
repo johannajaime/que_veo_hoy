@@ -2,7 +2,7 @@
   "name": "que_veo_hoy",
   "version": "1.0.0",
   "description": "que veo hoy con Node.js",
-  "main": "servidor.js",
+  "main": "index.js",
   "directories": {
     "lib": "lib"
   },

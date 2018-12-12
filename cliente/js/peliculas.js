@@ -92,7 +92,7 @@ function ControladorPeliculas() {
                 //en el caso de no haber resultados, se muestra la alerta
                 $(".alerta-resultados").show();
             } else {
-                for (i = 0; i < cantidad; i++) {
+                for (var i = 0; i < cantidad; i++) {
                     //se clona un elemento que funciona como ejemplo de como se van a mostrar las peliculas por pantalla
                     var pelicula = $(".ejemplo-pelicula").clone();
                     //se cargan los datos de las películas
@@ -100,9 +100,11 @@ function ControladorPeliculas() {
                     pelicula.find(".trama").html(peliculas[i].trama);
                     pelicula.find(".titulo").html(peliculas[i].titulo);
                     pelicula.attr("id", peliculas[i].id);
+                    var idPelicula = peliculas[i].Id
                     //cuando se haga click en una película, se va a redirigir la aplicación a la página info.html  
                     pelicula.click(function() {
-                        window.location.href = "info.html?id=" + this.id;
+                        console.log("---->", idPelicula)
+                        window.location.href = "info.html?id=" + idPelicula;
                     });
                     //se agrega la pelicula que al contenedor de peliculas
                     pelicula.appendTo($(".contenedor-peliculas"));

@@ -76,7 +76,6 @@ function ControladorPeliculas() {
             $.getJSON(servidor + "/peliculas?" + query,
                 function(data) {
                     //se ejecuta la funcion cargarListado() pasandole como parametro las peliculas que se obtuvieron
-                    console.log(data)
                     self.cargarListado(data.peliculas);
                     //se ejecuta la fucion cargarBotones() pasandole el total de peliculas que se obtienen como resultado
                     self.cargarBotones(data.total);
@@ -93,7 +92,7 @@ function ControladorPeliculas() {
                 //en el caso de no haber resultados, se muestra la alerta
                 $(".alerta-resultados").show();
             } else {
-                for (var i = 0; i < cantidad; i++) {
+                for (i = 0; i < cantidad; i++) {
                     //se clona un elemento que funciona como ejemplo de como se van a mostrar las peliculas por pantalla
                     var pelicula = $(".ejemplo-pelicula").clone();
                     //se cargan los datos de las películas
@@ -102,7 +101,7 @@ function ControladorPeliculas() {
                     pelicula.find(".titulo").html(peliculas[i].titulo);
                     pelicula.attr("id", peliculas[i].id);
                     //cuando se haga click en una película, se va a redirigir la aplicación a la página info.html  
-                    pelicula.click(function(e) {
+                    pelicula.click(function() {
                         window.location.href = "info.html?id=" + this.id;
                     });
                     //se agrega la pelicula que al contenedor de peliculas

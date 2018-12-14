@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.get('/peliculas', peliculasController.obtenerPeliculas);
 app.get('/generos', peliculasController.obtenerGeneros);
 app.get('/peliculas/:id', peliculasController.obtenerInformacionPelicula);
-app.get('/recomendaciones', peliculasController.recomendarPelicula);
+//app.get('/recomendaciones/', peliculasController.recomendarPelicula);
 
 
 //se setea el puerto en el cual va a escuchar los pedidos la aplicación

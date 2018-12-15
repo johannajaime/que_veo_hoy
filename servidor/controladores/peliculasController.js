@@ -2,8 +2,8 @@ var conexion = require('../lib/conexionbd');
 
 function obtenerPeliculas(req, res) {
   var sql;
-  var xSql;
-  var fieldsSql;
+  //var xSql;
+  var fieldsSql ="";
   var titulo = req.query.titulo;
   var anio = req.query.anio;
   var genero = req.query.genero;
@@ -26,12 +26,14 @@ function obtenerPeliculas(req, res) {
     filters.push(`genero_id = ${genero}`)
   }
 
-  sql = "SELECT * FROM pelicula"
+  sql = "SELECT * FROM pelicula "
  
   if (titulo || anio || genero) {
-     fieldsSql += " WHERE "
+      fieldsSql += " WHERE "
   }
-  fieldsSql += filters.join(' AND ')
+  
+
+   fieldsSql+= filters.join(' AND ')
   //FILTROS POR ORDEN
   var orderedFields = {
     titulo: 'titulo',
@@ -39,30 +41,30 @@ function obtenerPeliculas(req, res) {
     puntuacion: 'puntuacion',
     duracion: 'duracion'
   }
+  
 
   tipoOrden = tipoOrden || 'ASC'
 
   if (orden) {
     fieldsSql += ` ORDER BY ${orderedFields[orden]} ${tipoOrden}`
   }
-  //TOTAL DE PELÍCULAS
-  console.log(xSql);
+  
+  sql+=fieldsSql;
+
   xSql = "SELECT COUNT(*) AS total FROM pelicula"
-  xSql+= fieldsSql
-  conexion.query(xSql, function(error, result){
+  xSql+= fieldsSql;
+  
+  conexion.query(xSql, function(error, resultado){
    
     if (error) {
          console.log("Hubo un error en la consulta", error.message);
          return res.status(404).send("Hubo un error en la consulta");
     }
-    
     var total = resultado[0].total;
-    console.log("TOTAL", resultado)
-    sql+=fieldsSql;
+  
+    
     sql+= ` LIMIT ${(pagina - 1) * cantidad},${cantidad}`;
-    console.log("PAGINA", pagina)
-    console.log("CANTIDAD", cantidad)
-    console.log("---->>", sql)
+  
     
     conexion.query(sql, function(error, resultado){
       res.send({ peliculas: resultado,total:total });

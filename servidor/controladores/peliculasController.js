@@ -131,69 +131,68 @@ function obtenerInformacionPelicula(req, res){
     });
   }
 }
-/*
-function recomendarPelicula(req, res){
+function recomendarPelicula (req, res) {
+  console.log("-->",req.query);
+  var fieldsSql ="";
   var genero = req.query.genero;
+  var genero_id = req.query.genero_id;
   var anio_inicio = req.query.anio_inicio;
   var anio_fin = req.query.anio_fin;
-  var puntuacion = req.query.anio_puntuacion;
-
-  // Filtar por genero, anio, puntuación
-  var filters= []
-  if (genero){
-    filters.push(`genero_id = ${genero}`)
-  }
-  if (anio_inicio){
-    filters.push(`anio_inicio BETWEEN ${anio_inicio}`)
-  }
-  if (anio_fin){
-    filters.push(`anio_fin BETWEEN ${anio_fin}`)
+  var puntuacion = req.query.puntuacion;
+  var sql;
+  
+    // Filtrar por estreno, puntuacion, clasico
+  var filters = []
+ 
+  if(anio_inicio && anio_fin){
+    filters.push(` anio BETWEEN '${anio_inicio}' AND '${anio_fin}'`)
   }
   if(puntuacion){
-    filters.push(`puntuacion = ${puntuacion}`)
+    filters.push(` puntuacion = '${puntuacion}'`) 
+    console.log("puntuacion");
   }
-  var parametros = [
-    {'nombre': 'genero', 'valor': genero, 'query': 
-  ];
-
-  parametros.forEach(e => {
-    if (genero) {
-      var sql = `SELECT * FROM  pelicula`;
-      sql+= "WHERE"
-    }else{
-      var sql = `
-            SELECT
-              pelicula.*,
-              genero.nombre as genero,
-              actor.nombre as actor FROM pelicula
-            INNER JOIN genero ON pelicula.genero_id = genero.id
-            INNER JOIN actor_pelicula ON actor_pelicula.pelicula_id = pelicula.id
-            INNER JOIN actor ON actor_pelicula.actor_id = actor.id
-            `;
-      sql+="WHERE"
+  if (genero){
+    filters.push(`nombre = '${genero}'`)
+  }
   
-    }
-   sql+=filters.join('AND');
+  if (filters.length) {
+      fieldsSql += " WHERE " + filters.join(' AND ')
+  }
 
-  });
+  if (genero){
+    sqlCon=`
+    SELECT
+        pelicula.*,
+        genero.nombre as genero
+      FROM pelicula
+      INNER JOIN genero ON pelicula.genero_id = genero.id
+    `
+    sqlCon+=fieldsSql;
+    sql=sqlCon
+    console.log("--*>", sql);
+  }else{
+    sqlSin= `SELECT pelicula.* FROM pelicula`;
+    sqlSin+=fieldsSql;
+    sql=sqlSin
+  }
+  console.log("-->", sql);
+   conexion.query(sql, function(error, resultado) {
+     if (error) {
 
-  conexion.query(sql, function(error, resultado, fields) {
-    if (error) {
-      console.log("Hubo un error en la consulta", error.message);
-      return res.status(404).send("Hubo un error en la consulta");
-  
-    }
-    var response = {
-      'peliculas': resultado
-    };
+         console.log("Hubo un error en la consulta", error.message);
+         return res.status(404).send("Hubo un error en la consulta");
+     }
+     
+     var response = {
+       'peliculas': resultado
+     };
 
-    res.send(JSON.stringify(response));
-  });
+     res.send(JSON.stringify(response));
+ });
 }
-*/
 module.exports = {
 	obtenerPeliculas: obtenerPeliculas,
   obtenerGeneros: obtenerGeneros,
   obtenerInformacionPelicula: obtenerInformacionPelicula,
-  //recomendarPelicula: recomendarPelicula
+  recomendarPelicula: recomendarPelicula
 };
